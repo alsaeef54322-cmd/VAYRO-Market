@@ -3,6 +3,8 @@ import { X, Star, Heart, ShoppingBag, ArrowLeft, ArrowRight, Check } from 'lucid
 import { useLanguage } from '../../context/LanguageContext';
 import { useStore } from '../../context/StoreContext';
 
+import { handleImageError } from '../../utils/imageFallback';
+
 export const QuickViewModal: React.FC = () => {
   const { t, dir } = useLanguage();
   const {
@@ -18,6 +20,15 @@ export const QuickViewModal: React.FC = () => {
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [quantity, setQuantity] = useState(1);
+
+  React.useEffect(() => {
+    if (quickViewProduct) {
+      setSelectedImageIndex(0);
+      setSelectedColor(quickViewProduct.colors[0]?.name_ar || '');
+      setSelectedSize(quickViewProduct.sizes[0] || '');
+      setQuantity(1);
+    }
+  }, [quickViewProduct?.id]);
 
   if (!quickViewProduct) return null;
 
@@ -52,6 +63,7 @@ export const QuickViewModal: React.FC = () => {
             <img
               src={quickViewProduct.images[selectedImageIndex] || quickViewProduct.images[0]}
               alt={quickViewProduct.name_ar}
+              onError={handleImageError}
               className="w-full h-full object-cover"
             />
           </div>
@@ -64,10 +76,10 @@ export const QuickViewModal: React.FC = () => {
                   key={idx}
                   onClick={() => setSelectedImageIndex(idx)}
                   className={`w-14 h-14 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${
-                    selectedImageIndex === idx ? 'border-[#111310]' : 'border-transparent opacity-60'
+                    selectedImageIndex === idx ? 'border-[#111310] ring-2 ring-[#D5FF3F]' : 'border-transparent opacity-60'
                   }`}
                 >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
+                  <img src={img} alt="" onError={handleImageError} className="w-full h-full object-cover" />
                 </button>
               ))}
             </div>

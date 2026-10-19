@@ -7,10 +7,10 @@ import { PRODUCTS } from '../../data/products';
 
 export const NewArrivalsSection: React.FC = () => {
   const { t, dir } = useLanguage();
-  const { setCurrentPage } = useStore();
+  const { products, setCurrentPage } = useStore();
   const [activeTab, setActiveTab] = useState<'all' | 'women' | 'men' | 'accessories' | 'home'>('all');
 
-  const filteredProducts = PRODUCTS.filter((p) => {
+  const filteredProducts = products.filter((p) => {
     if (activeTab === 'all') return true;
     return p.category === activeTab;
   }).slice(0, 4);

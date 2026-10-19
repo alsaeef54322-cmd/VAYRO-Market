@@ -779,6 +779,51 @@ class ApiService {
     return null;
   }
 
+  addProduct(productData: Omit<Product, 'id'>, adminName = 'Super Admin'): Product {
+    const products = this.getManagedProducts();
+    const newId = `vayro-p${Date.now()}`;
+    const newProduct: Product = {
+      ...productData,
+      id: newId
+    };
+    products.unshift(newProduct);
+    try {
+      localStorage.setItem(this.productsStorageKey, JSON.stringify(products));
+    } catch (e) {
+      console.warn(e);
+    }
+    this.addAuditLog({
+      action_ar: `إضافة منتج جديد: ${newProduct.name_ar}`,
+      action_en: `Added new product: ${newProduct.name_en}`,
+      user: adminName,
+      role: 'Super Admin',
+      category: 'pricing',
+      details: `السعر: ${newProduct.price} ج.م | المخزون: ${newProduct.stock} | كود SKU: ${newProduct.sku || 'N/A'}`
+    });
+    return newProduct;
+  }
+
+  deleteProduct(productId: string, adminName = 'Super Admin'): boolean {
+    const products = this.getManagedProducts();
+    const target = products.find((p) => p.id === productId);
+    if (!target) return false;
+    const remaining = products.filter((p) => p.id !== productId);
+    try {
+      localStorage.setItem(this.productsStorageKey, JSON.stringify(remaining));
+    } catch (e) {
+      console.warn(e);
+    }
+    this.addAuditLog({
+      action_ar: `حذف منتج: ${target.name_ar}`,
+      action_en: `Deleted product: ${target.name_en}`,
+      user: adminName,
+      role: 'Super Admin',
+      category: 'pricing',
+      details: `تم حذف المنتج ${target.sku || target.id} نهائيًا من الكتالوج`
+    });
+    return true;
+  }
+
   async getProducts(filters?: FilterParams): Promise<ApiResponse<Product[]>> {
     await new Promise((resolve) => setTimeout(resolve, 60));
     let filtered = [...this.getManagedProducts()];
@@ -1279,6 +1324,47 @@ class ApiService {
     return null;
   }
 
+  addSupplier(supplierData: Omit<Supplier, 'id'>, adminName = 'Super Admin'): Supplier {
+    const list = this.getSuppliers();
+    const newId = `sup_${Date.now()}`;
+    const newSup: Supplier = {
+      ...supplierData,
+      id: newId
+    };
+    list.unshift(newSup);
+    try {
+      localStorage.setItem(this.suppliersStorageKey, JSON.stringify(list));
+    } catch {}
+    this.addAuditLog({
+      action_ar: `إضافة مورد جديد: ${newSup.name_ar}`,
+      action_en: `Added supplier: ${newSup.name_en}`,
+      user: adminName,
+      role: 'Super Admin',
+      category: 'supplier',
+      details: `كود المورد: ${newSup.code} | المحافظة: ${newSup.governorate} | الاتصال: ${newSup.contactPerson}`
+    });
+    return newSup;
+  }
+
+  deleteSupplier(supplierId: string, adminName = 'Super Admin'): boolean {
+    const list = this.getSuppliers();
+    const target = list.find((s) => s.id === supplierId);
+    if (!target) return false;
+    const remaining = list.filter((s) => s.id !== supplierId);
+    try {
+      localStorage.setItem(this.suppliersStorageKey, JSON.stringify(remaining));
+    } catch {}
+    this.addAuditLog({
+      action_ar: `حذف مورد: ${target.name_ar}`,
+      action_en: `Deleted supplier: ${target.name_en}`,
+      user: adminName,
+      role: 'Super Admin',
+      category: 'supplier',
+      details: `تم حذف المورد ${target.code} من القائمة المعتمدة`
+    });
+    return true;
+  }
+
   getStaffMembers(): StaffMember[] {
     try {
       const stored = localStorage.getItem(this.staffStorageKey);
@@ -1328,6 +1414,47 @@ class ApiService {
         localStorage.setItem(this.staffStorageKey, JSON.stringify(staffList));
       } catch {}
     }
+  }
+
+  addStaffMember(staffData: Omit<StaffMember, 'id'>, adminName = 'Super Admin'): StaffMember {
+    const list = this.getStaffMembers();
+    const newId = `staff_${Date.now()}`;
+    const newStaff: StaffMember = {
+      ...staffData,
+      id: newId
+    };
+    list.unshift(newStaff);
+    try {
+      localStorage.setItem(this.staffStorageKey, JSON.stringify(list));
+    } catch {}
+    this.addAuditLog({
+      action_ar: `إضافة عضو فريق مبيعات جديد: ${newStaff.name}`,
+      action_en: `Added sales staff: ${newStaff.name}`,
+      user: adminName,
+      role: 'Super Admin',
+      category: 'commission',
+      details: `كود الموظف: ${newStaff.code} | القسم: ${newStaff.department_ar} | الهدف الشهري: ${newStaff.monthlyTarget.toLocaleString()} ج.م`
+    });
+    return newStaff;
+  }
+
+  deleteStaffMember(staffId: string, adminName = 'Super Admin'): boolean {
+    const list = this.getStaffMembers();
+    const target = list.find((s) => s.id === staffId);
+    if (!target) return false;
+    const remaining = list.filter((s) => s.id !== staffId);
+    try {
+      localStorage.setItem(this.staffStorageKey, JSON.stringify(remaining));
+    } catch {}
+    this.addAuditLog({
+      action_ar: `إلغاء تفعيل/حذف موظف: ${target.name}`,
+      action_en: `Removed staff member: ${target.name}`,
+      user: adminName,
+      role: 'Super Admin',
+      category: 'commission',
+      details: `كود الموظف: ${target.code}`
+    });
+    return true;
   }
 
   updateOrderStatus(

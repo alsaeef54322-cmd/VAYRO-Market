@@ -4,6 +4,8 @@ import { Product } from '../../types';
 import { useLanguage } from '../../context/LanguageContext';
 import { useStore } from '../../context/StoreContext';
 
+import { handleImageError } from '../../utils/imageFallback';
+
 interface ProductCardProps {
   product: Product;
   featured?: boolean;
@@ -32,6 +34,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, featured = fa
           src={product.images[0]}
           alt={product.name_ar}
           loading="lazy"
+          onError={handleImageError}
           className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
         />
 
@@ -41,6 +44,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, featured = fa
             src={product.images[1]}
             alt={product.name_ar}
             loading="lazy"
+            onError={handleImageError}
             className="absolute inset-0 h-full w-full object-cover object-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"
           />
         )}

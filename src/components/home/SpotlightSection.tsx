@@ -7,14 +7,14 @@ import { PRODUCTS } from '../../data/products';
 
 export const SpotlightSection: React.FC = () => {
   const { t, dir } = useLanguage();
-  const { setCurrentPage } = useStore();
+  const { products, setCurrentPage } = useStore();
 
-  // Products from screenshot: headphones, vase, t-shirt, sunglasses
+  // Products from curation
   const spotlightProducts = [
-    PRODUCTS.find((p) => p.id === 'vayro-p5') || PRODUCTS[4],
-    PRODUCTS.find((p) => p.id === 'vayro-p6') || PRODUCTS[5],
-    PRODUCTS.find((p) => p.id === 'vayro-p7') || PRODUCTS[6],
-    PRODUCTS.find((p) => p.id === 'vayro-p8') || PRODUCTS[7],
+    products.find((p) => p.id === 'vayro-p5') || products[4],
+    products.find((p) => p.id === 'vayro-p6') || products[5],
+    products.find((p) => p.id === 'vayro-p7') || products[6],
+    products.find((p) => p.id === 'vayro-p8') || products[7],
   ].filter(Boolean);
 
   return (

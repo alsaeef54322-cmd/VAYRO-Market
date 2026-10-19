@@ -50,6 +50,8 @@ interface StoreContextType {
     }
   ) => void;
   updateProductStock: (productId: string, newStock: number) => void;
+  addProduct: (product: Omit<Product, 'id'>) => Product;
+  deleteProduct: (productId: string) => boolean;
 
   // Quick View Modal
   quickViewProduct: Product | null;
@@ -186,6 +188,22 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       refreshProducts();
       showToast(`تم تحديث مخزون "${updated.name_ar}" إلى ${newStock} قطعة`, 'info');
     }
+  };
+
+  const addProduct = (productData: Omit<Product, 'id'>): Product => {
+    const created = api.addProduct(productData, adminStaffUser?.name || 'Super Admin');
+    refreshProducts();
+    showToast(`تمت إضافة منتج "${created.name_ar}" إلى الكتالوج بنجاح!`, 'success');
+    return created;
+  };
+
+  const deleteProduct = (productId: string): boolean => {
+    const success = api.deleteProduct(productId, adminStaffUser?.name || 'Super Admin');
+    if (success) {
+      refreshProducts();
+      showToast('تم حذف المنتج بنجاح من النظام', 'info');
+    }
+    return success;
   };
 
   // Customer Auth
@@ -539,6 +557,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         refreshProducts,
         updateProductPrices,
         updateProductStock,
+        addProduct,
+        deleteProduct,
         quickViewProduct,
         setQuickViewProduct,
         cart,

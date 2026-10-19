@@ -12,11 +12,12 @@ import {
 import { useLanguage } from '../../context/LanguageContext';
 import { useStore } from '../../context/StoreContext';
 import { ProductCard } from '../product/ProductCard';
-import { PRODUCTS, CATEGORIES } from '../../data/products';
+import { CATEGORIES } from '../../data/products';
 
 export const CatalogPage: React.FC = () => {
   const { t, dir } = useLanguage();
   const {
+    products,
     selectedCategory,
     navigateToCategory,
     searchQuery,
@@ -40,7 +41,7 @@ export const CatalogPage: React.FC = () => {
   // Available unique colors and sizes for filter facet
   const allColors = useMemo(() => {
     const map = new Map<string, string>();
-    PRODUCTS.forEach((p) => {
+    products.forEach((p) => {
       p.colors.forEach((c) => {
         if (!map.has(c.name_ar)) {
           map.set(c.name_ar, c.hex);
@@ -48,19 +49,19 @@ export const CatalogPage: React.FC = () => {
       });
     });
     return Array.from(map.entries()).map(([name_ar, hex]) => ({ name_ar, hex }));
-  }, []);
+  }, [products]);
 
   const allSizes = useMemo(() => {
     const set = new Set<string>();
-    PRODUCTS.forEach((p) => {
+    products.forEach((p) => {
       p.sizes.forEach((s) => set.add(s));
     });
     return Array.from(set);
-  }, []);
+  }, [products]);
 
   // Filtered and sorted products
   const filteredProducts = useMemo(() => {
-    let result = [...PRODUCTS];
+    let result = [...products];
 
     if (selectedCategory) {
       result = result.filter((p) => p.category === selectedCategory);
@@ -155,8 +156,8 @@ export const CatalogPage: React.FC = () => {
                 ? `${t('نتائج البحث عن:', 'Search results for:')} "${searchQuery}"`
                 : t('جميع المنتجات المعروضة', 'All Curated Products')}
             </h1>
-            <p className="text-xs text-[#111310]/60 mt-1">
-              {t(`عرض ${filteredProducts.length} من أصل ${PRODUCTS.length} قطعة متاحة في مصر.`, `Displaying ${filteredProducts.length} of ${PRODUCTS.length} items in Egypt.`)}
+            <p className="text-xs text-[#111310]/60 dark:text-[#B5BDB3] mt-1">
+              {t(`عرض ${filteredProducts.length} من أصل ${products.length} قطعة متاحة في مصر.`, `Displaying ${filteredProducts.length} of ${products.length} items in Egypt.`)}
             </p>
           </div>
 

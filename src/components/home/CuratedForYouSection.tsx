@@ -7,13 +7,13 @@ import { PRODUCTS } from '../../data/products';
 
 export const CuratedForYouSection: React.FC = () => {
   const { t, dir } = useLanguage();
-  const { setCurrentPage } = useStore();
+  const { products, setCurrentPage } = useStore();
 
   const curatedProducts = [
-    PRODUCTS.find((p) => p.id === 'vayro-p9') || PRODUCTS[8],
-    PRODUCTS.find((p) => p.id === 'vayro-p10') || PRODUCTS[9],
-    PRODUCTS.find((p) => p.id === 'vayro-p11') || PRODUCTS[10],
-    PRODUCTS.find((p) => p.id === 'vayro-p12') || PRODUCTS[11],
+    products.find((p) => p.id === 'vayro-p9') || products[8],
+    products.find((p) => p.id === 'vayro-p10') || products[9],
+    products.find((p) => p.id === 'vayro-p11') || products[10],
+    products.find((p) => p.id === 'vayro-p12') || products[11],
   ].filter(Boolean);
 
   return (

@@ -12,11 +12,12 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useStore } from '../../context/StoreContext';
-import { PRODUCTS } from '../../data/products';
+import { handleImageError } from '../../utils/imageFallback';
 
 export const WishlistPage: React.FC = () => {
   const { t, dir } = useLanguage();
   const {
+    products,
     wishlist,
     removeFromWishlist,
     clearWishlist,
@@ -27,7 +28,7 @@ export const WishlistPage: React.FC = () => {
     setCurrentPage
   } = useStore();
 
-  const savedProducts = PRODUCTS.filter((p) => wishlist.includes(p.id));
+  const savedProducts = products.filter((p) => wishlist.includes(p.id));
 
   return (
     <div className="bg-[#F7F7F3] min-h-[80vh] py-10 sm:py-14">
@@ -120,6 +121,7 @@ export const WishlistPage: React.FC = () => {
                   <img
                     src={product.images[0]}
                     alt={product.name_ar}
+                    onError={handleImageError}
                     onClick={() => navigateToProduct(product.id)}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                   />

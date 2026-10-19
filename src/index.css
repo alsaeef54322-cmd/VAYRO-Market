@@ -1,0 +1,261 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --bg-main: #F7F7F3;
+    --bg-surface: #FFFFFF;
+    --bg-elevated: #F0EEE6;
+    --text-primary: #20241F;
+    --text-secondary: #646A63;
+    --border-color: #E2E5DE;
+    --color-accent: #18794E;
+    --color-highlight: #D5FF3F;
+  }
+
+  .dark,
+  html.dark {
+    --bg-main: #111411;
+    --bg-surface: #1A1F1A;
+    --bg-elevated: #232923;
+    --text-primary: #F3F5EF;
+    --text-secondary: #B5BDB3;
+    --border-color: #353D35;
+    --color-accent: #65C98A;
+    --color-highlight: #D5FF3F;
+  }
+
+  html[dir="rtl"] {
+    font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+  }
+
+  html[dir="ltr"] {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
+
+/* Custom font utilities */
+.font-arabic {
+  font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+}
+
+.font-english {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+.font-display {
+  font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Hide scrollbar for clean carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Gentle floating animation for WhatsApp button */
+@keyframes vayroFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-vayro-float {
+  animation: vayroFloat 3.2s ease-in-out infinite;
+}
+
+/* =========================================================================
+   VAYRO COMPLETE & PROFESSIONAL DARK MODE ENGINE
+   Matches exact brand tokens:
+   Light: Bg #F7F7F3, Surface #FFFFFF, Primary #20241F, Secondary #646A63, Border #E2E5DE, Accent #18794E
+   Dark:  Bg #111411, Surface #1A1F1A, Elevated #232923, Primary #F3F5EF, Secondary #B5BDB3, Border #353D35, Accent #65C98A
+   ========================================================================= */
+
+html.dark,
+.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #111411 !important;
+  color: #F3F5EF !important;
+}
+
+/* 1. Surfaces & Backgrounds */
+.dark .bg-\[\#F7F7F3\],
+.dark .bg-\[\#F7F7F3\]\/95,
+.dark .bg-\[\#F5F2E9\],
+.dark .bg-\[\#FAF9F5\],
+.dark .bg-\[\#FAF8F5\],
+.dark .bg-\[\#ECEAE1\],
+.dark .bg-\[\#EAE6DC\],
+.dark .bg-gray-50,
+.dark .bg-neutral-50,
+.dark .bg-stone-50 {
+  background-color: #111411 !important;
+}
+
+.dark .bg-white {
+  background-color: #1A1F1A !important;
+  color: #F3F5EF;
+}
+
+.dark .bg-white\/80,
+.dark .bg-white\/90,
+.dark .bg-white\/95 {
+  background-color: rgba(26, 31, 26, 0.95) !important;
+  color: #F3F5EF;
+}
+
+.dark .bg-\[\#ECEAE1\]\/40,
+.dark .bg-\[\#ECEAE1\]\/50,
+.dark .bg-\[\#ECEAE1\]\/70,
+.dark .bg-\[\#F5F2E9\]\/40,
+.dark .bg-\[\#F5F2E9\]\/60,
+.dark .bg-\[\#F5F2E9\]\/80,
+.dark .bg-gray-100 {
+  background-color: #232923 !important;
+}
+
+/* 2. Text colors & Contrast Safeguards */
+.dark .text-\[\#20241F\],
+.dark .text-\[\#111310\],
+.dark .text-black,
+.dark .text-gray-900,
+.dark .text-neutral-900 {
+  color: #F3F5EF !important;
+}
+
+.dark .text-\[\#646A63\],
+.dark .text-gray-600,
+.dark .text-gray-500,
+.dark .text-neutral-500,
+.dark .text-\[\#20241F\]\/70,
+.dark .text-\[\#111310\]\/70,
+.dark .text-\[\#20241F\]\/60,
+.dark .text-\[\#111310\]\/60 {
+  color: #B5BDB3 !important;
+}
+
+.dark .text-\[\#20241F\]\/50,
+.dark .text-\[\#111310\]\/50,
+.dark .text-\[\#20241F\]\/40,
+.dark .text-\[\#111310\]\/40,
+.dark .text-gray-400 {
+  color: rgba(181, 189, 179, 0.65) !important;
+}
+
+/* Accent Emerald in Dark Mode */
+.dark .text-\[\#18794E\],
+.dark .text-emerald-700,
+.dark .text-emerald-800 {
+  color: #65C98A !important;
+}
+
+.dark .bg-\[\#18794E\]\/10,
+.dark .bg-emerald-50 {
+  background-color: rgba(101, 201, 138, 0.12) !important;
+  color: #65C98A !important;
+}
+
+/* 3. Borders & Dividers */
+.dark .border-\[\#E2E5DE\],
+.dark .border-\[\#20241F\]\/10,
+.dark .border-\[\#111310\]\/10,
+.dark .border-\[\#20241F\]\/15,
+.dark .border-\[\#111310\]\/15,
+.dark .border-\[\#20241F\]\/20,
+.dark .border-\[\#111310\]\/20,
+.dark .border-\[\#20241F\]\/5,
+.dark .border-\[\#111310\]\/5,
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-gray-300 {
+  border-color: #353D35 !important;
+}
+
+.dark .divide-\[\#20241F\]\/5,
+.dark .divide-\[\#111310\]\/5,
+.dark .divide-gray-100,
+.dark .divide-gray-200 {
+  border-color: #353D35 !important;
+}
+
+/* 4. Form inputs, Textareas, Selects & Checkboxes */
+.dark input[type="text"],
+.dark input[type="email"],
+.dark input[type="password"],
+.dark input[type="tel"],
+.dark input[type="number"],
+.dark input[type="search"],
+.dark textarea,
+.dark select {
+  background-color: #232923 !important;
+  color: #F3F5EF !important;
+  border-color: #353D35 !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: rgba(181, 189, 179, 0.5) !important;
+}
+
+.dark select option {
+  background-color: #1A1F1A !important;
+  color: #F3F5EF !important;
+}
+
+/* 5. Tables & Grids */
+.dark table {
+  background-color: #1A1F1A !important;
+  color: #F3F5EF !important;
+  border-color: #353D35 !important;
+}
+
+.dark thead,
+.dark th {
+  background-color: #232923 !important;
+  color: #F3F5EF !important;
+  border-color: #353D35 !important;
+}
+
+.dark td {
+  border-color: #353D35 !important;
+  color: #F3F5EF !important;
+}
+
+.dark tbody tr:hover td {
+  background-color: rgba(35, 41, 35, 0.75) !important;
+}
+
+/* 6. Modals, Drawers & Popovers */
+.dark .bg-black\/50,
+.dark .bg-black\/60 {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+}
+
+/* 7. Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

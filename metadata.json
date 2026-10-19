@@ -1,0 +1,6 @@
+{
+  "name": "VAYRO Market | Premium Egyptian Commerce",
+  "description": "VAYRO Market is a premium Egyptian e-commerce marketplace featuring luxury fashion, artisanal home collections, customer accounts, and wholesale B2B ordering.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

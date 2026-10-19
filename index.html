@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VAYRO Market | Premium Egyptian Commerce</title>
+    <meta name="description" content="VAYRO Market is a premium Egyptian e-commerce marketplace featuring luxury fashion, artisanal home collections, customer accounts, and wholesale B2B ordering." />
+    <meta property="og:title" content="VAYRO Market | Premium Egyptian Commerce" />
+    <meta property="og:description" content="VAYRO Market is a premium Egyptian e-commerce marketplace featuring luxury fashion, artisanal home collections, customer accounts, and wholesale B2B ordering." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <!-- Safeguard window.fetch setter compatibility for browser extensions and test harnesses -->
+    <script>
+      (function() {
+        try {
+          var _origFetch = typeof window.fetch === 'function' ? window.fetch.bind(window) : undefined;
+          Object.defineProperty(window, 'fetch', {
+            configurable: true,
+            enumerable: true,
+            get: function() {
+              return _origFetch;
+            },
+            set: function(fn) {
+              _origFetch = fn;
+            }
+          });
+        } catch (e) {
+          // Fallback if environment restricts redefinition
+        }
+      })();
+
+      // Prevent Dark Mode white flash on initial load
+      (function() {
+        try {
+          var saved = localStorage.getItem('vayro_theme');
+          var isDark = saved === 'dark' || (!saved && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.style.colorScheme = 'dark';
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-[#F7F7F3] text-[#20241F] antialiased selection:bg-[#D5FF3F] selection:text-[#20241F]">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
